@@ -1,6 +1,8 @@
 import React from 'react';
 
-export default function muhelm(WrappedComponent, mapMusToProps = () => {}) {
+const SOURCE_NODES = ['script', 'link'];
+
+export function muhelm(WrappedComponent, mapMusToProps = (/* node, done */) => {}) {
   let muObserver;
   let muSubscriber = () => {};
 
@@ -25,7 +27,9 @@ export default function muhelm(WrappedComponent, mapMusToProps = () => {}) {
     }
 
     done = (data) => {
-      this.setState(data);
+      if (data) {
+        this.setState(data);
+      }
     }
 
     render() {
@@ -34,3 +38,14 @@ export default function muhelm(WrappedComponent, mapMusToProps = () => {}) {
     }
   };
 }
+
+export function muhelmLoads(WrappedComponent, mapLoadsToProps = (/* loadedSourceId */) => {}) {
+  return muhelm(WrappedComponent, (node, done) => {
+    if (SOURCE_NODES.indexOf(node.TagName.toLowerCase()) > -1) {
+      node.addEventListener('load', () => {
+        done(mapLoadsToProps(node.id));
+      });
+    }
+  });
+}
+

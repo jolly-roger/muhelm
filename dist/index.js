@@ -1,8 +1,8 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('react')) :
-	typeof define === 'function' && define.amd ? define(['react'], factory) :
-	(global.muhelm = factory(global.React));
-}(this, (function (React) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react')) :
+	typeof define === 'function' && define.amd ? define(['exports', 'react'], factory) :
+	(factory((global.muhelm = {}),global.React));
+}(this, (function (exports,React) { 'use strict';
 
 React = React && React.hasOwnProperty('default') ? React['default'] : React;
 
@@ -96,8 +96,10 @@ var possibleConstructorReturn = function (self, call) {
   return call && (typeof call === "object" || typeof call === "function") ? call : self;
 };
 
+var SOURCE_NODES = ['script', 'link'];
+
 function muhelm(WrappedComponent) {
-  var mapMusToProps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
+  var mapMusToProps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () /* node, done */{};
 
   var muObserver = void 0;
   var muSubscriber = function muSubscriber() {};
@@ -123,7 +125,9 @@ function muhelm(WrappedComponent) {
       var _this = possibleConstructorReturn(this, (_class2.__proto__ || Object.getPrototypeOf(_class2)).call(this, props));
 
       _this.done = function (data) {
-        _this.setState(data);
+        if (data) {
+          _this.setState(data);
+        }
       };
 
       muSubscriber = function muSubscriber(node) {
@@ -144,6 +148,21 @@ function muhelm(WrappedComponent) {
   }(React.Component);
 }
 
-return muhelm;
+function muhelmLoads(WrappedComponent) {
+  var mapLoadsToProps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () /* loadedSourceId */{};
+
+  return muhelm(WrappedComponent, function (node, done) {
+    if (SOURCE_NODES.indexOf(node.TagName.toLowerCase()) > -1) {
+      node.addEventListener('load', function () {
+        done(mapLoadsToProps(node.id));
+      });
+    }
+  });
+}
+
+exports.muhelm = muhelm;
+exports.muhelmLoads = muhelmLoads;
+
+Object.defineProperty(exports, '__esModule', { value: true });
 
 })));
