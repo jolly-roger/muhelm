@@ -105,32 +105,30 @@ function muhelm(wrappedComponent) {
   }
 
   return function (_React$Component) {
-    inherits(_class, _React$Component);
+    inherits(_class2, _React$Component);
 
-    function _class(props) {
-      classCallCheck(this, _class);
+    function _class2(props) {
+      classCallCheck(this, _class2);
 
-      var _this = possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
+      var _this = possibleConstructorReturn(this, (_class2.__proto__ || Object.getPrototypeOf(_class2)).call(this, props));
 
-      _this.done = _this.done.bind(_this);
+      _this.done = function (data) {
+        _this.setState(data);
+      };
+
       muSubscriber = function muSubscriber(node) {
         mapMusToProps(node, _this.done);
       };
       return _this;
     }
 
-    createClass(_class, [{
-      key: 'done',
-      value: function done(data) {
-        this.setState(data);
-      }
-    }, {
+    createClass(_class2, [{
       key: 'render',
       value: function render() {
         return React.createElement('wrappedComponent', _extends({}, this.props, this.state));
       }
     }]);
-    return _class;
+    return _class2;
   }(React.Component);
 }
 

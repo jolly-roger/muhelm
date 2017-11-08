@@ -19,13 +19,12 @@ export default function muhelm(wrappedComponent, mapMusToProps = () => {}) {
   return class extends React.Component {
     constructor(props) {
       super(props);
-      this.done = this.done.bind(this);
       muSubscriber = (node) => {
         mapMusToProps(node, this.done);
       };
     }
 
-    done(data) {
+    done = (data) => {
       this.setState(data);
     }
 
