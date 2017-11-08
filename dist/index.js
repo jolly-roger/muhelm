@@ -76,7 +76,17 @@ var inherits = function (subClass, superClass) {
 
 
 
+var objectWithoutProperties = function (obj, keys) {
+  var target = {};
 
+  for (var i in obj) {
+    if (keys.indexOf(i) >= 0) continue;
+    if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;
+    target[i] = obj[i];
+  }
+
+  return target;
+};
 
 var possibleConstructorReturn = function (self, call) {
   if (!self) {
@@ -125,7 +135,9 @@ function muhelm(wrappedComponent) {
     createClass(_class2, [{
       key: 'render',
       value: function render() {
-        return React.createElement('wrappedComponent', _extends({}, this.props, this.state));
+        var passThroughProps = objectWithoutProperties(this.props, []);
+
+        return React.createElement('wrappedComponent', _extends({}, passThroughProps, this.state));
       }
     }]);
     return _class2;

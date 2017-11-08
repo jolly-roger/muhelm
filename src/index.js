@@ -29,7 +29,8 @@ export default function muhelm(wrappedComponent, mapMusToProps = () => {}) {
     }
 
     render() {
-      return (<wrappedComponent {...this.props} {...this.state} />);
+      const { ...passThroughProps } = this.props;
+      return (<wrappedComponent {...passThroughProps} {...this.state} />);
     }
   };
 }

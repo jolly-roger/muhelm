@@ -10,7 +10,10 @@ gulp.task('default', ['lint'], () => {
     plugins: [
       babel({
         presets: ['react', 'es2015-rollup'],
-        plugins: ["transform-class-properties"],
+        plugins: [
+          "transform-class-properties",
+          "transform-object-rest-spread"
+        ],
         babelrc: false,
         exclude: 'node_modules/**'
       })
