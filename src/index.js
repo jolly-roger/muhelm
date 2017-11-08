@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function muhelm(wrappedComponent, mapMusToProps = () => {}) {
+export default function muhelm(WrappedComponent, mapMusToProps = () => {}) {
   let muObserver;
   let muSubscriber = () => {};
 
@@ -30,7 +30,7 @@ export default function muhelm(wrappedComponent, mapMusToProps = () => {}) {
 
     render() {
       const { ...passThroughProps } = this.props;
-      return (<wrappedComponent {...passThroughProps} {...this.state} />);
+      return (<WrappedComponent {...passThroughProps} {...this.state} />);
     }
   };
 }

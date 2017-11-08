@@ -96,7 +96,7 @@ var possibleConstructorReturn = function (self, call) {
   return call && (typeof call === "object" || typeof call === "function") ? call : self;
 };
 
-function muhelm(wrappedComponent) {
+function muhelm(WrappedComponent) {
   var mapMusToProps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
 
   var muObserver = void 0;
@@ -137,7 +137,7 @@ function muhelm(wrappedComponent) {
       value: function render() {
         var passThroughProps = objectWithoutProperties(this.props, []);
 
-        return React.createElement('wrappedComponent', _extends({}, passThroughProps, this.state));
+        return React.createElement(WrappedComponent, _extends({}, passThroughProps, this.state));
       }
     }]);
     return _class2;
