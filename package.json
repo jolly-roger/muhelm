@@ -1,6 +1,6 @@
 {
   "name": "muhelm",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Provides simple way of subscription to changes of HTML head to React components",
   "main": "dist/index.js",
   "scripts": {
