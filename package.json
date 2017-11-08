@@ -1,0 +1,46 @@
+{
+  "name": "muhelm",
+  "version": "0.1.0",
+  "description": "Provides simple way of subscription to changes of HTML head to React components",
+  "main": "dist/index.js",
+  "scripts": {
+    "gulp": "gulp",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jolly-roger/muhelm.git"
+  },
+  "keywords": [
+    "react",
+    "helmet",
+    "onload",
+    "load",
+    "style",
+    "script",
+    "link"
+  ],
+  "author": {
+    "name": "Igor Onyshchenko",
+    "email": "igor.onyshchenko@gmail.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jolly-roger/muhelm/issues"
+  },
+  "homepage": "https://github.com/jolly-roger/muhelm#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.2",
+    "babel-preset-es2015-rollup": "^3.0.0",
+    "babel-preset-react": "^6.24.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^4.0.0",
+    "gulp-file": "^0.3.0",
+    "react": "^16.0.0",
+    "rollup": "^0.51.1",
+    "rollup-plugin-babel": "^3.0.2"
+  }
+}
