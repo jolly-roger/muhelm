@@ -152,7 +152,7 @@ function muhelmLoads(WrappedComponent) {
   var mapLoadsToProps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () /* loadedSourceId */{};
 
   return muhelm(WrappedComponent, function (node, done) {
-    if (SOURCE_NODES.indexOf(node.TagName.toLowerCase()) > -1) {
+    if (SOURCE_NODES.indexOf(node.tagName.toLowerCase()) > -1) {
       node.addEventListener('load', function () {
         done(mapLoadsToProps(node.id));
       });

@@ -2,6 +2,9 @@
 <!-- Komodo Project File - DO NOT EDIT -->
 <project id="97141147-c57b-473f-9cb6-8125c5c5f686" kpf_version="5" name="muhelm.komodoproject">
 <preference-set idref="97141147-c57b-473f-9cb6-8125c5c5f686" id="project" preftype="project">
+  <string relative="path" id="import_dirname"></string>
+  <string id="last_local_directory">None</string>
+  <string id="last_remote_directory">None</string>
   <long id="prefs_version">1</long>
 </preference-set>
 </project>
