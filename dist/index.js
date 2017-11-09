@@ -99,16 +99,21 @@ var possibleConstructorReturn = function (self, call) {
 var SOURCE_NODES = ['script', 'link'];
 
 function muhelm(WrappedComponent) {
-  var mapMusToProps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () /* node, done */{};
+  var mapMusToProps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () /* nodes, done */{};
 
   var muObserver = void 0;
-  var muSubscriber = function muSubscriber() {};
+  var muSubscriber = null;
+  var muStore = [];
 
   if (typeof MutationObserver !== 'undefined') {
     muObserver = new MutationObserver(function (mus) {
       mus.forEach(function (mu) {
         mu.addedNodes.forEach(function (node) {
-          muSubscriber(node);
+          if (muSubscriber) {
+            muSubscriber(node);
+          } else {
+            muStore.push(node);
+          }
         });
       });
     });
@@ -125,11 +130,13 @@ function muhelm(WrappedComponent) {
       var _this = possibleConstructorReturn(this, (_class2.__proto__ || Object.getPrototypeOf(_class2)).call(this, props));
 
       _this.done = function (data) {
-        if (data) {
+        if (!_this.toBeUnmount && data) {
           _this.setState(data);
         }
       };
 
+      _this.state = {};
+      _this.toBeUnmount = false;
       muSubscriber = function muSubscriber(node) {
         mapMusToProps(node, _this.done);
       };
@@ -137,6 +144,18 @@ function muhelm(WrappedComponent) {
     }
 
     createClass(_class2, [{
+      key: 'componentDidMount',
+      value: function componentDidMount() {
+        mapMusToProps(muStore.slice(), this.done);
+        muStore = [];
+      }
+    }, {
+      key: 'componentWillUnmount',
+      value: function componentWillUnmount() {
+        muSubscriber = null;
+        this.toBeUnmount = true;
+      }
+    }, {
       key: 'render',
       value: function render() {
         var passThroughProps = objectWithoutProperties(this.props, []);
@@ -149,14 +168,16 @@ function muhelm(WrappedComponent) {
 }
 
 function muhelmLoads(WrappedComponent) {
-  var mapLoadsToProps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () /* loadedSourceId */{};
+  var mapLoadsToProps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () /* nodes */{};
 
-  return muhelm(WrappedComponent, function (node, done) {
-    if (SOURCE_NODES.indexOf(node.tagName.toLowerCase()) > -1) {
-      node.addEventListener('load', function () {
-        done(mapLoadsToProps(node.id));
-      });
-    }
+  return muhelm(WrappedComponent, function (nodes, done) {
+    nodes.forEach(function (node) {
+      if (SOURCE_NODES.indexOf(node.tagName.toLowerCase()) > -1) {
+        node.addEventListener('load', function () {
+          done(mapLoadsToProps(node));
+        });
+      }
+    });
   });
 }
 
