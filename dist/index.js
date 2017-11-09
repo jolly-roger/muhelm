@@ -168,9 +168,12 @@ function muhelm(WrappedComponent) {
 }
 
 function muhelmLoads(WrappedComponent) {
-  var mapLoadsToProps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () /* nodes */{};
+  var mapLoadsToProps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () /* node */{};
 
-  return muhelm(WrappedComponent, function (nodes, done) {
+  return muhelm(WrappedComponent, function () {
+    var nodes = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+    var done = arguments[1];
+
     nodes.forEach(function (node) {
       if (SOURCE_NODES.indexOf(node.tagName.toLowerCase()) > -1) {
         node.addEventListener('load', function () {

@@ -56,8 +56,8 @@ export function muhelm(WrappedComponent, mapMusToProps = (/* nodes, done */) => 
   };
 }
 
-export function muhelmLoads(WrappedComponent, mapLoadsToProps = (/* nodes */) => {}) {
-  return muhelm(WrappedComponent, (nodes, done) => {
+export function muhelmLoads(WrappedComponent, mapLoadsToProps = (/* node */) => {}) {
+  return muhelm(WrappedComponent, (nodes = [], done) => {
     nodes.forEach((node) => {
       if (SOURCE_NODES.indexOf(node.tagName.toLowerCase()) > -1) {
         node.addEventListener('load', () => {
