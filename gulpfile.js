@@ -15,14 +15,18 @@ gulp.task('default', ['lint'], () => {
           "transform-object-rest-spread"
         ],
         babelrc: false,
-        exclude: 'node_modules/**'
+        exclude: 'node_modules/**',
       })
-    ]
+    ],
+    external: ['react']
   })
   .then(bundle => {
     return bundle.generate({
       format: 'umd',
-      name: 'muhelm'
+      name: 'muhelm',
+      globals: {
+        react: 'React'
+      }
     });
   })
   .then(gen => {
