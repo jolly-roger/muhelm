@@ -19,7 +19,7 @@ needed data to your React component by passing properties into it, see following
 ```javascript
 import {muhelmLoads} from 'muhelm';
 
-muhelmLoads(StyledComponent, (node) => {
+muConnectLoads(StyledComponent, (node) => {
 	if (node && node.id === 'styled-component-styles') {
 		return {
 			isStyledComponentStylesLoaded: true
@@ -33,7 +33,7 @@ In case if you need more control you can use general mutation callback like in f
 ```javascript
 import {muhelm} from 'muhelm';
 
-muhelm(StyledComponent, (nodes) => {
+muConnect(StyledComponent, (nodes) => {
   nodes.forEach((node) => {
     if (node.id === 'styled-component-styles') {
       node.addEventListener('load', () => {
