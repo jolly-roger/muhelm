@@ -48,12 +48,12 @@ muhelm(StyledComponent, (nodes) => {
 
 ## API
 
-### muhelmLoads
+### muConnectLoads
 Subscribes to `load` event of styles and scripts in head
 * **node** - DOM Element that represents link or script tag in head
 * Should return properties object or anything that can be cast as false. Properties will be passed through to wrapped component
 
-### muhelm
+### muConnect
 Subscribes to any mutation of the head
 * **nodes** - Array of DOM elements that were mutated
 * **done** - MuHelm callback. You need to pass properties object or anything that can be cast as false to callback. Properties will be passed through to wrapped component

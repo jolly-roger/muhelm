@@ -98,7 +98,7 @@ var possibleConstructorReturn = function (self, call) {
 
 var SOURCE_NODES = ['script', 'link'];
 
-function muhelm(WrappedComponent) {
+function muConnect(WrappedComponent) {
   var mapMusToProps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () /* nodes, done */{};
 
   var muObserver = void 0;
@@ -167,10 +167,10 @@ function muhelm(WrappedComponent) {
   }(React.Component);
 }
 
-function muhelmLoads(WrappedComponent) {
+function muConnectLoads(WrappedComponent) {
   var mapLoadsToProps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () /* node */{};
 
-  return muhelm(WrappedComponent, function () {
+  return muConnect(WrappedComponent, function () {
     var nodes = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
     var done = arguments[1];
 
@@ -184,8 +184,8 @@ function muhelmLoads(WrappedComponent) {
   });
 }
 
-exports.muhelm = muhelm;
-exports.muhelmLoads = muhelmLoads;
+exports.muConnect = muConnect;
+exports.muConnectLoads = muConnectLoads;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

@@ -2,7 +2,7 @@ import React from 'react';
 
 const SOURCE_NODES = ['script', 'link'];
 
-export function muhelm(WrappedComponent, mapMusToProps = (/* nodes, done */) => {}) {
+export function muConnect(WrappedComponent, mapMusToProps = (/* nodes, done */) => {}) {
   let muObserver;
   let muSubscriber = null;
   let muStore = [];
@@ -56,8 +56,8 @@ export function muhelm(WrappedComponent, mapMusToProps = (/* nodes, done */) => 
   };
 }
 
-export function muhelmLoads(WrappedComponent, mapLoadsToProps = (/* node */) => {}) {
-  return muhelm(WrappedComponent, (nodes = [], done) => {
+export function muConnectLoads(WrappedComponent, mapLoadsToProps = (/* node */) => {}) {
+  return muConnect(WrappedComponent, (nodes = [], done) => {
     nodes.forEach((node) => {
       if (SOURCE_NODES.indexOf(node.tagName.toLowerCase()) > -1) {
         node.addEventListener('load', () => {
