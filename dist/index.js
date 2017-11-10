@@ -6,6 +6,22 @@
 
 React = React && React.hasOwnProperty('default') ? React['default'] : React;
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+  return typeof obj;
+} : function (obj) {
+  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+};
+
+
+
+
+
+
+
+
+
+
+
 var classCallCheck = function (instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
@@ -98,6 +114,10 @@ var possibleConstructorReturn = function (self, call) {
 
 var SOURCE_NODES = ['script', 'link'];
 
+function isHTMLElement(muNode) {
+  return muNode && (typeof muNode === 'undefined' ? 'undefined' : _typeof(muNode)) === 'object' && muNode.tagName;
+}
+
 function muConnect(WrappedComponent) {
   var mapMusToProps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () /* nodes, done */{};
 
@@ -108,13 +128,16 @@ function muConnect(WrappedComponent) {
   if (typeof MutationObserver !== 'undefined') {
     muObserver = new MutationObserver(function (mus) {
       mus.forEach(function (mu) {
-        mu.addedNodes.forEach(function (node) {
+        // IE NodeList does not implement iterator
+        // eslint-disable-next-line
+        for (var i in mu.addedNodes) {
+          var node = mu.addedNodes[i];
           if (muSubscriber) {
             muSubscriber(node);
           } else {
             muStore.push(node);
           }
-        });
+        }
       });
     });
 
@@ -174,13 +197,20 @@ function muConnectLoads(WrappedComponent) {
     var nodes = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
     var done = arguments[1];
 
-    nodes.forEach(function (node) {
-      if (SOURCE_NODES.indexOf(node.tagName.toLowerCase()) > -1) {
+    var _loop = function _loop(i) {
+      var node = nodes[i];
+      if (isHTMLElement(node) && SOURCE_NODES.indexOf(node.tagName.toLowerCase()) > -1) {
         node.addEventListener('load', function () {
           done(mapLoadsToProps(node));
         });
       }
-    });
+    };
+
+    // IE NodeList does not implement iterator
+    // eslint-disable-next-line
+    for (var i in nodes) {
+      _loop(i);
+    }
   });
 }
 

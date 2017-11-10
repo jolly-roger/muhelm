@@ -2,6 +2,10 @@ import React from 'react';
 
 const SOURCE_NODES = ['script', 'link'];
 
+function isHTMLElement(muNode) {
+  return (muNode && typeof muNode === 'object' && muNode.tagName);
+}
+
 export function muConnect(WrappedComponent, mapMusToProps = (/* nodes, done */) => {}) {
   let muObserver;
   let muSubscriber = null;
@@ -10,13 +14,16 @@ export function muConnect(WrappedComponent, mapMusToProps = (/* nodes, done */) 
   if (typeof MutationObserver !== 'undefined') {
     muObserver = new MutationObserver((mus) => {
       mus.forEach((mu) => {
-        mu.addedNodes.forEach((node) => {
+        // IE NodeList does not implement iterator
+        // eslint-disable-next-line
+        for (let i in mu.addedNodes) {
+          const node = mu.addedNodes[i];
           if (muSubscriber) {
             muSubscriber(node);
           } else {
             muStore.push(node);
           }
-        });
+        }
       });
     });
 
@@ -58,13 +65,16 @@ export function muConnect(WrappedComponent, mapMusToProps = (/* nodes, done */) 
 
 export function muConnectLoads(WrappedComponent, mapLoadsToProps = (/* node */) => {}) {
   return muConnect(WrappedComponent, (nodes = [], done) => {
-    nodes.forEach((node) => {
-      if (SOURCE_NODES.indexOf(node.tagName.toLowerCase()) > -1) {
+    // IE NodeList does not implement iterator
+    // eslint-disable-next-line
+    for (let i in nodes) {
+      const node = nodes[i];
+      if (isHTMLElement(node) && SOURCE_NODES.indexOf(node.tagName.toLowerCase()) > -1) {
         node.addEventListener('load', () => {
           done(mapLoadsToProps(node));
         });
       }
-    });
+    }
   });
 }
 
